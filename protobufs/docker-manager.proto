@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+enum ContainerAction {
+    UP = 0;
+    DOWN = 1;
+    RECREATE = 2;
+    STATUS = 3;
+}
+
+message ContainerManagerRequest {
+    string containerId = 1;
+    ContainerAction action = 2;
+}
+
+message ContainerManagerResponse {
+    string containerId = 1;
+    string result = 2;
+}
+
+service ContainerManager {
+    rpc ManageContainer (ContainerManagerRequest) returns (ContainerManagerResponse);
+}
