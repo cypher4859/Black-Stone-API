@@ -1,10 +1,10 @@
 syntax = "proto3";
 
 enum ContainerAction {
-    UP = 0;
-    DOWN = 1;
-    RECREATE = 2;
-    STATUS = 3;
+    UP = 1;
+    DOWN = 2;
+    RECREATE = 3;
+    STATUS = 4;
 }
 
 message ContainerManagerRequest {
