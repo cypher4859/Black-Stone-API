@@ -1,15 +1,16 @@
 syntax = "proto3";
 
 enum ContainerAction {
-    UP = 1;
-    DOWN = 2;
-    RECREATE = 3;
-    STATUS = 4;
+    UP = 0;
+    DOWN = 1;
+    RECREATE = 2;
+    STATUS = 3;
 }
 
 message ContainerManagerRequest {
     string containerId = 1;
     ContainerAction action = 2;
+    string image = 3;
 }
 
 message ContainerManagerResponse {
