@@ -1,1 +1,2 @@
 grpcio-tools ~= 1.38.1
+grpc-interceptor ~= 0.13.0

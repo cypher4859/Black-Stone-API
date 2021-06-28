@@ -1,4 +1,5 @@
 from concurrent import futures
+from signal import signal, SIGTERM
 import os
 import grpc
 import docker_manager_pb2_grpc
@@ -8,6 +9,7 @@ from docker_manager_pb2 import (
     ContainerManagerRequest,
     ContainerManagerResponse
 )
+from grpc_interceptor import ServerInterceptor
 
 client = docker.from_env()
 
@@ -50,11 +52,32 @@ class ContainerManagerService(docker_manager_pb2_grpc.ContainerManagerServicer):
             containerResultMessage = f"ERROR! Invalid Argument"
         return ContainerManagerResponse(containerId=request.containerId, result=f"{containerResultMessage}")
 
+class ErrorLogger(ServerInterceptor):
+    def intercept(self, method, request, context, method_name):
+        try:
+            return method(request, context)
+        except Exception as e:
+            self.log_error(e)
+            raise
+
+    def log_error(self, e: Exception) -> None:
+        # Do things with the error
+        print(e)
+
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    interceptors = [ErrorLogger()]
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), interceptors=interceptors)
     docker_manager_pb2_grpc.add_ContainerManagerServicer_to_server(ContainerManagerService(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
+
+    def handle_sigterm(*_):
+        print("Received shutdown signal")
+        all_rpcs_done_event = server.stop(10)
+        all_rpcs_done_event.wait(10)
+        print("Shut down gracefully")
+
+    signal(SIGTERM, handle_sigterm)
     server.wait_for_termination()
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+from validations import validateAction
 import os
 
 from flask import Flask, request
@@ -15,13 +16,14 @@ container_manager_channel = grpc.insecure_channel(
 container_manager_client = ContainerManagerStub(container_manager_channel)
 
 
-@app.route("/docker-manager")
+@app.route("/docker-manager", methods=["GET", "POST"])
 def manageContainer():
-    container_id = request.args.form['containerId']
-    container_action = request.args.form['action']
-    container_image = request.args.form['image']
+    container_id = request.form['containerId']
+    container_action = ContainerAction.Value(request.form['action'])
+    container_image = request.form['image']
+    requestArgs = { 'containerId': container_id, 'action': container_action, 'image': container_image }
     containerRequest = ContainerManagerRequest(
-        containerId=container_id, action=ContainerAction[container_action], image=container_image
+        **requestArgs
     )
     container_manager_response = container_manager_client.ManageContainer(containerRequest)
     return container_manager_response.result
