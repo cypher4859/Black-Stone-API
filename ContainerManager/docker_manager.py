@@ -21,10 +21,6 @@ class ContainerManagerService(docker_manager_pb2_grpc.ContainerManagerServicer):
         if request.exposedPort:
             additionalArguments['ports'] = { f"{request.exposedPort}/tcp" : int(request.exposedPort) } # '25565/tcp': 25565
 
-        # if request.volumeName or request.volumeSource or request.volumeDestination:
-        #     additionalArguments['volumes'] = { request.volumeName: { 'bind': request.volumeDestination, 'mode': 'rw' } }
-        #     print(additionalArguments['volumes'])
-
         if request.volume:
             volumeJson = json.loads(request.volume)
             volume = { volumeJson['name']: { volumeJson['type']: volumeJson['destination'], 'mode': volumeJson['mode'] } }

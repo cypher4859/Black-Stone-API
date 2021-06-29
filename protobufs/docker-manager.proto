@@ -13,9 +13,6 @@ message ContainerManagerRequest {
     string image = 3;
     string exposedPort = 4;
     string volume = 5;
-    // string volumeName = 5;
-    // string volumeSource = 6;
-    // string volumeDestination = 7;
 }
 
 message ContainerManagerResponse {
