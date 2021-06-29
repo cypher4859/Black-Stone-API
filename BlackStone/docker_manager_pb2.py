@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x14\x64ocker-manager.proto\"_\n\x17\x43ontainerManagerRequest\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t\x12 \n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\x10.ContainerAction\x12\r\n\x05image\x18\x03 \x01(\t\"?\n\x18\x43ontainerManagerResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t\x12\x0e\n\x06result\x18\x02 \x01(\t*=\n\x0f\x43ontainerAction\x12\x06\n\x02UP\x10\x00\x12\x08\n\x04\x44OWN\x10\x01\x12\x0c\n\x08RECREATE\x10\x02\x12\n\n\x06STATUS\x10\x03\x32Z\n\x10\x43ontainerManager\x12\x46\n\x0fManageContainer\x12\x18.ContainerManagerRequest\x1a\x19.ContainerManagerResponseb\x06proto3'
+  serialized_pb=b'\n\x14\x64ocker-manager.proto\"\x84\x01\n\x17\x43ontainerManagerRequest\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t\x12 \n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\x10.ContainerAction\x12\r\n\x05image\x18\x03 \x01(\t\x12\x13\n\x0b\x65xposedPort\x18\x04 \x01(\t\x12\x0e\n\x06volume\x18\x05 \x01(\t\"?\n\x18\x43ontainerManagerResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t\x12\x0e\n\x06result\x18\x02 \x01(\t*=\n\x0f\x43ontainerAction\x12\x06\n\x02UP\x10\x00\x12\x08\n\x04\x44OWN\x10\x01\x12\x0c\n\x08RECREATE\x10\x02\x12\n\n\x06STATUS\x10\x03\x32Z\n\x10\x43ontainerManager\x12\x46\n\x0fManageContainer\x12\x18.ContainerManagerRequest\x1a\x19.ContainerManagerResponseb\x06proto3'
 )
 
 _CONTAINERACTION = _descriptor.EnumDescriptor(
@@ -53,8 +53,8 @@ _CONTAINERACTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=186,
-  serialized_end=247,
+  serialized_start=224,
+  serialized_end=285,
 )
 _sym_db.RegisterEnumDescriptor(_CONTAINERACTION)
 
@@ -95,6 +95,20 @@ _CONTAINERMANAGERREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='exposedPort', full_name='ContainerManagerRequest.exposedPort', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='volume', full_name='ContainerManagerRequest.volume', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -107,8 +121,8 @@ _CONTAINERMANAGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24,
-  serialized_end=119,
+  serialized_start=25,
+  serialized_end=157,
 )
 
 
@@ -146,8 +160,8 @@ _CONTAINERMANAGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=121,
-  serialized_end=184,
+  serialized_start=159,
+  serialized_end=222,
 )
 
 _CONTAINERMANAGERREQUEST.fields_by_name['action'].enum_type = _CONTAINERACTION
@@ -179,8 +193,8 @@ _CONTAINERMANAGER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=249,
-  serialized_end=339,
+  serialized_start=287,
+  serialized_end=377,
   methods=[
   _descriptor.MethodDescriptor(
     name='ManageContainer',

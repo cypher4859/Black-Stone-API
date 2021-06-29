@@ -8,14 +8,19 @@ enum ContainerAction {
 }
 
 message ContainerManagerRequest {
-    optional string containerId = 1;
-    required ContainerAction action = 2;
-    optional string image = 3;
+    string containerId = 1;
+    ContainerAction action = 2;
+    string image = 3;
+    string exposedPort = 4;
+    string volume = 5;
+    // string volumeName = 5;
+    // string volumeSource = 6;
+    // string volumeDestination = 7;
 }
 
 message ContainerManagerResponse {
-    optional string containerId = 1;
-    required string result = 2;
+    string containerId = 1;
+    string result = 2;
 }
 
 service ContainerManager {

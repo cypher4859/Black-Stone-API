@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, request
 import grpc
-
+import json
 from docker_manager_pb2 import ContainerAction, ContainerManagerRequest, ContainerManagerResponse
 from docker_manager_pb2_grpc import ContainerManagerStub
 
@@ -18,12 +18,19 @@ container_manager_client = ContainerManagerStub(container_manager_channel)
 
 @app.route("/docker-manager", methods=["GET", "POST"])
 def manageContainer():
-    container_id = request.form['containerId']
-    container_action = ContainerAction.Value(request.form['action'])
-    container_image = request.form['image']
-    requestArgs = { 'containerId': container_id, 'action': container_action, 'image': container_image }
+    req = request.get_json()
+    # print(req)
+    container_id = req['containerId']
+    container_action = ContainerAction.Value(req['action'])
+    container_image = req['image']
+    container_port = req['port']
+    container_volume = json.dumps(req['volumes'])
+
+    requestArgs = { 'containerId': container_id, 'action': container_action, 'image': container_image, 'exposedPort': container_port, 'volume': container_volume }
     containerRequest = ContainerManagerRequest(
         **requestArgs
     )
     container_manager_response = container_manager_client.ManageContainer(containerRequest)
-    return container_manager_response.result
+    print(container_manager_response.result)
+    return container_manager_response.result, 200
+    # return 'Thanks', 200
