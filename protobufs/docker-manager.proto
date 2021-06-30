@@ -11,6 +11,8 @@ message ContainerManagerRequest {
     string containerId = 1;
     ContainerAction action = 2;
     string image = 3;
+    string exposedPort = 4;
+    string volume = 5;
 }
 
 message ContainerManagerResponse {
