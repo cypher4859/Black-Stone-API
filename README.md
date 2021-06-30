@@ -14,3 +14,9 @@ A simple flask API used to control various microservices written in Python using
 - Do the setup.sh scripts for both services
 - register the daemon services with systemd by `cp`ing the service files into `/etc/services/systemd/`
 - do a `systemctl daemon-reload` and start the services
+
+
+### Weird?
+- Had to do an apt install python3-flask. The setup wasn't working
+- Need to make sure that service is running as a user that can access the python packages
+- Make a `run.sh` that works for both microservices so that if the run command needs changed then it can be changed in one place
